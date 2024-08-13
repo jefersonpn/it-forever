@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 
+require __DIR__.'/auth.php';
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,4 +29,12 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    // Other admin routes
+});
+
+Route::middleware(['auth', 'role:client'])->group(function () {
+    Route::get('/client/backoffice', [ClientController::class, 'index'])->name('client.backoffice');
+    // Other client routes
+});
