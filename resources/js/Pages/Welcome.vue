@@ -18,7 +18,8 @@
                 </li>
                 <!-- Authentication Links -->
                 <li v-if="$page.props.auth.user" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
-                    <Link :href="route('dashboard')" class="nav-menu__link">Dashboard</Link>
+                    <Link v-if="userRole === 'admin'" :href="route('admin.dashboard')" class="nav-menu__link">Dashboard</Link>
+                    <Link v-if="userRole === 'client'" :href="route('client.backoffice')" class="nav-menu__link">Dashboard</Link>
                 </li>
                 <li v-if="$page.props.auth.user" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
                     <Link :href="route('logout')" method="post" class="nav-menu__link" as="button" type="button">
@@ -331,9 +332,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Head } from '@inertiajs/vue3';
-import { Link } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+import { Head, Link, usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const userRole = ref('');
+
+onMounted(() => {
+    const user = page.props.auth.user;
+
+    if (user && user.roles && user.roles.length > 0) {
+        userRole.value = user.roles[0].name;
+    }
+});
 
 const authenticated = ref(false); // This should be set according to your app's authentication logic
 const canRegister = ref(true); // This should be set according to your app's logic

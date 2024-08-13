@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -7,7 +8,17 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
+const page = usePage();
 const showingNavigationDropdown = ref(false);
+const userRole = ref('');
+
+onMounted(() => {
+    // Getting the user role
+    if (page.props.auth.user.roles && page.props.auth.user.roles.length > 0) {
+        userRole.value = page.props.auth.user.roles[0].name;
+    }
+
+});
 </script>
 
 <template>
@@ -29,7 +40,10 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink v-if="userRole === 'admin'" :href="route('admin.dashboard')" :active="route().current('dashboard')">
+                                    Dashboard
+                                </NavLink>
+                                <NavLink v-if="userRole === 'client'" :href="route('client.backoffice')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
                             </div>
