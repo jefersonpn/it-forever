@@ -20,6 +20,11 @@
                 <li v-if="$page.props.auth.user" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
                     <Link :href="route('dashboard')" class="nav-menu__link">Dashboard</Link>
                 </li>
+                <li v-if="$page.props.auth.user" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
+                    <Link :href="route('logout')" method="post" class="nav-menu__link" as="button" type="button">
+                        Sair
+                    </Link>
+                </li>
                 <li v-else class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
                     <Link :href="route('login')" class="nav-menu__link">Login</Link>
                 </li>
