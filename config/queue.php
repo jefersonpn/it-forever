@@ -72,6 +72,15 @@ return [
             'after_commit' => false,
         ],
 
+        'mail' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION', 'mysql'), 
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'mail',  // Specifying that this connection handles the 'mail' queue
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 90),
+            'after_commit' => false,
+        ],
+
     ],
 
     /*
