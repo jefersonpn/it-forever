@@ -3,6 +3,8 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 
@@ -29,12 +31,18 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
+// Admin Routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    // Other admin routes
+    Route::get('/admin/dashboard', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('admin.dashboard');
+    // Add more admin routes here
 });
 
+// Client Routes
 Route::middleware(['auth', 'role:client'])->group(function () {
-    Route::get('/client/backoffice', [ClientController::class, 'index'])->name('client.backoffice');
-    // Other client routes
+    Route::get('/client/dashboard', function () {
+        return Inertia::render('Client/Backoffice');
+    })->name('client.backoffice');
+    // Add more client routes here
 });
