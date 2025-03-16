@@ -190,8 +190,8 @@ p {
 
 .decorative-image {
     position: absolute; /* Positions the image absolutely */
-    top: 0; /* Adjusts top position over the text */
-    left: 25%; /* Centers the image horizontally */
+    top: -30px; /* Adjusts top position over the text */
+    left: 220px; /* Centers the image horizontally */
     transform: translateX(-50%); /* Centers it properly */
     max-width: 215px; /* Sets maximum width of the image */
     width: 100%; /* Ensures the image takes full width of its container */
@@ -304,19 +304,82 @@ p {
     position: absolute;
     height: auto;
     z-index: -1; /* Ensure it is behind the text */
+    width: 76%; /* Default width for larger screens */
+    bottom: 0; /* Consistent positioning across all sizes */
+    left: 0; /* Align to the left of the container */
+    transform: translateY(0); /* No vertical transform to maintain exact distance */
 }
 
-@media (max-width: 1680px) {
-    .passaporto {
-        width: 86%;
-        transform: translate(-12%, -31%); /* Transform for screens <= 1680px */
-    }
-}
-
+/* Large screens */
 @media (min-width: 1681px) {
     .passaporto {
         width: 76%;
-        transform: translate(-12%, -28%); /* Transform for screens > 1680px */
+        bottom: 0;
+        left: 0;
+        transform: translateY(0);
+    }
+}
+
+/* Medium screens */
+@media (max-width: 1680px) and (min-width: 1041px) {
+    .passaporto {
+        width: 86%;
+        bottom: 0; /* Maintain 64px from bottom */
+        left: 0;
+        transform: translateY(0); /* Remove transform to maintain exact 64px */
+    }
+}
+
+/* Tablets */
+@media (max-width: 1040px) and (min-width: 769px) {
+    .passaporto {
+        width: 70%;
+        bottom: 0; /* Set to 64px to match other screen sizes */
+        left: 0;
+        transform: translateY(0); /* Remove transform to maintain exact 64px */
+    }
+    
+    .about-content {
+        width: 90%;
+    }
+    
+    .about-text {
+        transform: translate(40%, -10%);
+        padding: 6% 20% 0% 0%;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+    .passaporto {
+        width: 80%;
+        position: relative; /* Keep relative positioning for mobile */
+        bottom: auto; /* Remove bottom positioning for relative elements */
+        left: auto; /* Remove left positioning for relative elements */
+        transform: translate(0, 10px); /* Adjust transform for mobile */
+        margin: -20px auto 20px;
+        display: block;
+    }
+    
+    .about-content {
+        flex-direction: column;
+        padding: 8% 5%;
+        width: 90%;
+    }
+    
+    .about-text {
+        width: 100%;
+        padding: 30px 15px 0;
+        transform: none;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .passaporto {
+        width: 90%;
+        margin: -10px auto 15px;
+        transform: translate(0, 0); /* Reset transform for smallest screens */
     }
 }
 
@@ -933,10 +996,35 @@ p {
 }
 
 /* Responsive Media Queries */
+@media (max-width: 1040px) {
 
-@media (max-width: 1024px) {
-    .cards-container {
-        flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    .decorative-image {
+        top: 15px;
+        left: 15%;
+    }
+
+    .content__text {
+        padding: 64px 135px 10px 71px;
+    }
+    .header__container, .nav-menu__list {
+        flex-direction: column; /* Stack header and nav menu items vertically */
+        align-items: flex-start; /* Align items to start */
+    }
+
+    .content__section,
+    .about-section,
+    .benefits-section {
+        padding: 20px; /* Adjust padding for smaller screens */
+        flex-direction: column; /* Stack content vertically */
+    }
+
+    .about-text {
+        padding: 0; /* Remove extra padding for tablets */
+    }
+
+    .cards-container,
+    .services-list {
+        flex-wrap: wrap; /* Allow wrapping of cards and services */
         justify-content: center; /* Center items when wrapped */
         gap: 20px; /* Adjust gap for smaller screens */
     }
@@ -950,13 +1038,80 @@ p {
         width: 50px; /* Adjust icon size for tablets */
         height: auto; /* Maintain aspect ratio */
     }
+
+    .hamburger {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        position: absolute;
+        right: 20px; /* Adjust this value to position it correctly */
+        top: 15px; /* Adjust this value to position it correctly */
+        z-index: 1000; /* Ensure it's above other elements */
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        background-color: #333;
+        transition: all 0.3s;
+    }
+
+        /* Ensure the navigation list is hidden initially */
+    .nav-menu__list {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0; /* Align the list to the right */
+        width: 200px; /* Set the width of the dropdown */
+        background-color: #fff;
+        padding: 10px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999; /* Ensure it's above other elements */
+    }
+
+    /* Display the navigation list when the menu is active */
+    .nav-menu__list.is-active {
+        display: flex;
+    }
+
+    /* Style for the links inside the dropdown */
+    .nav-menu__item {
+        margin: 10px 0; /* Adjusts space between links */
+        text-align: left; /* Ensure links are aligned to the left */
+    }
+
+    /* Remove separator after links */
+    .nav-menu__item:not(:last-child) .nav-menu__link::after {
+        content: none; /* Remove the separator */
+    }
+
+    /* Adjust the spacing and padding inside the links */
+    .nav-menu__link {
+        padding: 5px 15px; /* Adds padding around the links */
+        display: block; /* Ensure block-level display for the links */
+        font-size: 14px; /* Adjust font size as needed */
+        color: #333; /* Link color */
+    }
+
+}
+
+/* Ensure the hamburger is hidden on larger screens */
+@media (min-width: 1041px) {
+    .hamburger {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
     .header__container {
         flex-direction: column; /* Stacks items vertically */
         align-items: flex-start; /* Aligns items to start of container */
-        padding: 10px 20px; /* Adjusts padding */
+        padding: 10px 20px; /* Adjust padding */
     }
 
     .logo img {
@@ -972,20 +1127,15 @@ p {
     .content__section,
     .about-section,
     .benefits-section {
-        padding: 20px; /* Adjusts padding */
+        flex-direction: column; /* Stack content vertically */
+        padding: 20px; /* Adjust padding for smaller screens */
     }
 
-    .decorative-image {
+    .decorative-image,
+    .about-decorative-image {
         max-width: 80px; /* Sets maximum image width for smaller screens */
         width: 100%; /* Ensures the image takes full width of its container */
         height: auto; /* Maintains aspect ratio */
-        top: -10px; /* Adjusts position */
-        left: 50%; /* Centers the image horizontally */
-        transform: translateX(-50%); /* Centers it properly */
-        opacity: 100%; /* Makes the image visible */
-    }
-
-    .about-decorative-image {
         top: -10px; /* Adjusts position */
         left: 50%; /* Centers the image horizontally */
         transform: translateX(-50%); /* Centers it properly */
@@ -999,7 +1149,7 @@ p {
     }
 
     .button {
-        padding: 12px 20px; /* Adjusts padding */
+        padding: 12px 20px; /* Adjust padding */
     }
 
     .about-text .divider {
@@ -1011,6 +1161,11 @@ p {
 
     .about-text {
         padding-left: 0; /* Removes extra padding */
+    }
+
+    .cards-container {
+        gap: 20px; /* Reduce gap between cards */
+        flex-direction: column; /* Stack cards vertically */
     }
 
     .cards-content {
@@ -1030,15 +1185,20 @@ p {
     .cards-content p {
         font-size: 0.9rem; /* Adjust paragraph font size for mobile */
     }
+
+    .content__text h1 {
+        font-size: 2rem; /* Smaller font size for headers on mobile */
+    }
 }
 
 @media (max-width: 480px) {
     .content__section {
         height: auto; /* Allows height to adjust automatically */
+        padding: 10px; /* Less padding on very small devices */
     }
 
     .content__text h1 {
-        font-size: 2rem; /* Adjusts font size */
+        font-size: 1.8rem; /* Smaller header text */
         letter-spacing: 0.8px; /* Adjusts letter spacing for smaller screens */
     }
 
@@ -1055,9 +1215,10 @@ p {
         padding: 0px; /* Adjusts padding */
     }
 
+    .nav-menu__list,
     .about-section,
     .benefits-section {
-        padding: 20px; /* Adjusts padding */
+        padding: 10px; /* Less padding on very small devices */
     }
 
     .about-text h2 {
@@ -1086,7 +1247,14 @@ p {
         font-size: 0.9rem; /* Adjust font size for mobile */
     }
 
+    .cards-container, .services-list {
+        flex-direction: column; /* Stack cards and services vertically */
+    }
+
     .cards-content p {
         font-size: 0.8rem; /* Adjust paragraph font size */
     }
 }
+
+
+

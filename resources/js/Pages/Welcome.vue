@@ -6,17 +6,22 @@
         <img src="/images/logo.png" alt="Italianos Forever Logo" />
       </div>
         <nav class="nav-menu">
-            <ul id="menu-1-6411232" class="nav-menu__list" data-smartmenus-id="17226655878646082">
+            <button @click="toggleMenu" class="hamburger" aria-label="Toggle navigation">
+                <!-- Hamburger icon (3 bars) -->
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="menu-1-6411232" class="nav-menu__list" :class="{ 'is-active': isMenuOpen }" data-smartmenus-id="17226655878646082">
                 <li class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-14">
-                <a href="#sobre" class="nav-menu__link">Sobre Nós</a>
+                    <a href="#sobre" class="nav-menu__link">Sobre Nós</a>
                 </li>
                 <li class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-15">
-                <a href="#cidadania" class="nav-menu__link">Cidadania Italiana</a>
+                    <a href="#cidadania" class="nav-menu__link">Cidadania Italiana</a>
                 </li>
                 <li class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
-                <a href="#contato" class="nav-menu__link">Contato</a>
+                    <a href="#contato" class="nav-menu__link">Contato</a>
                 </li>
-                <!-- Authentication Links -->
                 <li v-if="$page.props.auth.user" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
                     <Link v-if="userRole === 'admin'" :href="route('admin.dashboard')" class="nav-menu__link">Dashboard</Link>
                     <Link v-if="userRole === 'client'" :href="route('client.backoffice')" class="nav-menu__link">Dashboard</Link>
@@ -318,7 +323,7 @@
         <div class="col-12 copyright-content">
           <div class="col-12 d-flex align-items-center">
             <p class="mb-0 mr-2">Designed by </p>
-            <a href="https://sinnapse.com" target="_blank"><img src="/images/sinnapse-logo.png" alt="sinnapse" /></a>
+            <a href="https://sinnapse.com" target="_blank"><img src="/images/sinnapse-logo.png" alt="sinnapse" style="height: 20px; width: auto;" /></a>
             <p class="mb-0 ms-2">
               and Recreated by <span class="highlighted-text"><a href="https://www.linkedin.com/in/jefersonpn/" target="_blank">Jeferson Nascimento</a></span>
             </p>
@@ -332,23 +337,33 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+    import { ref, onMounted } from 'vue';
+    import { Head, Link, usePage } from '@inertiajs/vue3';
 
-const page = usePage();
-const userRole = ref('');
+    const page = usePage();
+    const userRole = ref('');
 
-onMounted(() => {
-    const user = page.props.auth.user;
+    onMounted(() => {
+        const user = page.props.auth.user;
 
-    if (user && user.roles && user.roles.length > 0) {
-        userRole.value = user.roles[0].name;
-    }
-});
+        if (user && user.roles && user.roles.length > 0) {
+            userRole.value = user.roles[0].name;
+        }
+    });
 
-const authenticated = ref(false); // This should be set according to your app's authentication logic
-const canRegister = ref(true); // This should be set according to your app's logic
+    // States for authentication and registration (already present in your code)
+    const authenticated = ref(false); // This should be set according to your app's authentication logic
+    const canRegister = ref(true); // This should be set according to your app's logic
+
+    // State to manage the visibility of the hamburger menu
+    const isMenuOpen = ref(false);
+
+    // Function to toggle the menu visibility
+    const toggleMenu = () => {
+        isMenuOpen.value = !isMenuOpen.value;
+    };
 </script>
+
 
 <style scoped>
 /* Add any scoped styles if necessary */
