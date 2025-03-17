@@ -34,9 +34,9 @@
                 <li v-else class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
                     <Link :href="route('login')" class="nav-menu__link">Login</Link>
                 </li>
-                <li v-if="!$page.props.auth.user && $page.props.canRegister" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
+                <!-- <li v-if="!$page.props.auth.user && $page.props.canRegister" class="nav-menu__item menu-item-type-custom menu-item-object-custom menu-item-16">
                     <Link :href="route('register')" class="nav-menu__link">Cadastre-se</Link>
-                </li>
+                </li> -->
             </ul>
         </nav>
 

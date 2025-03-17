@@ -33,7 +33,7 @@ class RoleSeeder extends Seeder
         $user = User::create([
             'name' => 'Admin',
             'email' => 'admin@italianosforever.com',
-            'password' => Hash::make('admin'), // Use Hash facade for password hashing
+            'password' => Hash::make('4everadmin'), // Use Hash facade for password hashing
         ]);
 
         // Assign role 'admin' to the user
